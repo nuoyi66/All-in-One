@@ -1,5 +1,5 @@
 # .vscode/preview.yml
-autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
+autoOpen: flase # 打开工作空间时是否自动开启所有应用的预览
 apps:
   # 以 hello-world.js 为例
   - port: 3000 # 应用的端口
@@ -7,5 +7,5 @@ apps:
     root: ./examples # 应用的启动目录
     name: my-first-app # 应用名称
     description: 我的第一个 App。 # 应用描述
-    autoOpen: true # 打开工作空间时是否自动开启预览（优先级高于根级 autoOpen）
+    autoOpen: flase # 打开工作空间时是否自动开启预览（优先级高于根级 autoOpen）
     
