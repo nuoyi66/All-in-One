@@ -3,7 +3,7 @@ vscode配置git：
 取消勾选
 use Editor As commit input
 
-window自启动：win + r 然后输入 shell:startup、
+window自启动：win + r 然后输入 shell:startup
 
 nps：
 客户端注册到系统服务 (开机启动、守护进程)
