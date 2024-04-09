@@ -1,1 +1,422 @@
-# 程序语言示例（包含多种语言）
+# 常用笔记
+window自启动：win + r 然后输入 shell:startup、
+
+nps：
+客户端注册到系统服务 (开机启动、守护进程)
+对于 linux、darwin
+　　注册： sudo ./npc install 其他参数（例如-server=xx -vkey=xx或者-config=xxx）
+　　启动： sudo npc start
+　　停止： sudo npc stop
+　　如果需要更换命令内容需要先卸载./npc uninstall，再重新注册
+　　对于 windows，使用管理员身份运行 cmd
+　　注册： npc.exe install 其他参数（例如-server=xx -vkey=xx或者-config=xxx）
+　　启动： npc.exe start
+　　停止： npc.exe stop
+　　如果需要更换命令内容需要先卸载 npc.exe uninstall，再重新注册
+
+压力测试：
+stress -c 3 --vm 2 --vm-bytes 1700M --vm-keep  -i 8 -d 2 --hdd-bytes 1700M
+
+
+tcping操作
+-t:通过control-c持续ping直到停止
+
+-n 5：例如，发送5个ping
+
+-i5:例如，每5秒ping一次
+
+-w 0.5：例如，等待0.5秒的响应
+
+-d：包括每行的日期和时间
+
+-b 1：启用蜂鸣音（1表示向下，2表示向上，
+
+3表示随时更改，4表示始终更改）
+
+-r5：例如，每隔5次ping重新查找主机名
+
+-s：ping成功后自动退出
+
+-v：打印版本并退出
+
+-j：包括抖动，使用默认滚动平均值
+
+-js5：包含抖动，滚动平均大小为（例如）5。
+
+--tee：将输出镜像到“--tee”之后指定的文件名
+
+--append：附加到--tee文件名，而不是覆盖它
+
+-4:首选ipv4
+
+-6:首选ipv6
+
+-c：仅显示更改状态下的输出行
+
+--file：将“服务器地址”视为文件名，逐行循环文件
+
+注意：--file与-j和-c等选项不兼容，因为它在不同的目标之间循环
+
+可选地接受服务器端口。例如，“example.org 443”是有效的。
+
+或者，使用-p在命令行强制为文件中的所有内容设置端口。
+
+-例如，如果我们连续5次失败，就放弃
+
+-S _X_：指定源地址_X_。源必须是客户端计算机的有效IP。
+
+-p _X_：指定端口的备用方法
+
+--fqdn：如果可用，在每行上打印域名
+
+--ansi：使用ansi颜色序列（cygwin）
+
+--颜色：使用Windows颜色序列
+
+
+
+HTTP选项：
+
+-h:HTTP模式（使用不带HTTP://的url作为服务器地址）
+
+-u：每行包含目标URL
+
+--post：使用post而不是GET（可以避免缓存）
+
+--head：使用head而不是GET
+
+--代理服务器：指定代理服务器
+
+--代理端口：指定代理端口
+
+--代理凭据：以username:password格式指定“代理授权：基本”标头
+
+
+
+调试选项：
+
+-f：强制tcping至少发送一个字节
+
+--header：包含带有原始参数和日期的标头。--header：包括带有原始参数的标头和日期。使用--tee时隐含。
+
+--block:使用“blocking”套接字进行连接。%1这会阻止-w工作，并使用
+
+
+
+swap操作：
+查看 Linux 当前 Swap 分区
+free -m
+关闭 Swap 分区
+swapoff -a
+创建 Swap 分区文件
+dd if=/dev/zero of=/var/swapfile bs=1M count=4096
+建立 Swap 文件系统
+mkswap /var/swapfile
+启用 Swap 分区
+swapon /var/swapfile
+设置开启启动
+vi /etc/fstab
+/var/swapfile swap swap defaults 0 0
+
+lvm：
+fdisk /dev/xxx
+n
+p
+t 8e
+w
+pvcreate /dev/xxx{x,x}           //创建pv
+vgcreate  vgname /dev/xxx  //创建vg
+vgreduce vg /dev/xxx            //删除一个pv
+vgextend vg /dev/xxx         //添加一个pv
+lvcreate -L xxM -n lvname  vgname   //创建lv
+mkfs.ext4 /dev/vgname/lvname       //格式化
+mkdir //创建
+mount //挂载
+lvresize -L +&-xxM /dev/vgname/lvname  //调整lv分区大小
+e2fsck -f /dev/vgname/lvname
+resize2fs /dev/vgname/lvname  更新调整
+vgrename old new //vg改名
+lvrename old new //lv改名
+vi /etc/fstab //自动挂载
+
+磁盘工具
+sudo apt install gnome-disk-utility  
+
+sudo apt install gparted
+
+宝塔：
+上面是关了防火墙，直接下载也是这样，最后通过修改hosts，将域名download.bt.cn固定在美国节点IP128.1.164.196后正常。
+
+vi /etc/hosts
+加入如下后保存(注意bt的源常换ip，具体ip请根据超级ping选择可用的)：
+
+128.1.164.196 download.bt.cn
+nohup ./npc -server=150.158.93.237:7777 -vkey=gjb -type=tcp &
+117.176.129.188
+
+
+Centos安装脚本
+yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh ed8484bec
+Ubuntu/Deepin安装脚本
+wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh && sudo bash install.sh ed8484bec
+Debian安装脚本
+wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh && bash install.sh ed8484bec
+万能安装脚本
+if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_panel.sh;else wget -O install_panel.sh https://download.bt.cn/install/install_panel.sh;fi;bash install_panel.sh ed8484bec
+国产龙芯架构安装脚本
+wget -O install_panel.sh http://download.bt.cn/install/0/loongarch64/loongarch64_install_panel.sh && bash install_panel.sh ed8484bec
+
+
+内存中文： 
+vi /www/server/panel/plugin//linuxsys/linuxsys_main.py
+free -m |grep swap 改成 free -m |grep 交换
+
+
+
+
+ubuntu22换源：
+vi /etc/apt/sources.list
+
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+
+
+图形化
+centos：
+yum groupinstall "Server with GUI" -y
+systemctl set-default graphical
+reboot
+
+ubuntu ： 
+apt-get install tasksel
+ 默认的显示管理器是GDM3，但是它占用的系统资源较多。可以选择更轻量级的SDDM，SLiM或LightDM。
+apt-get install sddm
+tasksel
+使用键盘方向键↑↓，移动光标至Ubuntu desktop选项上
+按下空格键来选中Ubuntu desktop选项
+按下Tab键使光标移动至<ok>选项上
+按下回车键开始下载Ubuntu desktop
+reboot
+
+vnc：
+sudo apt install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal ubuntu-desktop
+sudo apt-get install tightvncserver
+sudo vncserver
+sudo vi ~/.vnc/xstartup
+
+#!/bin/sh
+export XKL_XMODMAP_DISABLE=1
+export XDG_CURRENT_DESKTOP="GNOME-Flashback:GNOME"
+export XDG_MENU_PREFIX="gnome-flashback-"
+gnome-session --session=gnome-flashback-metacity --disable-acceleration-check &
+sudo vncserver -kill :1 #杀掉原桌面进程，输入命令（其中的:1是桌面号）
+sudo vncserver -geometry 1920x1080 :1 #生成新的会话
+
+debian：
+sudo apt update
+sudo apt upgrade
+sudo apt install tasksel    
+sudo tasksel install desktop gnome-desktop      或 sudo apt  install xfce4 xfce4-goodies //安装图形化工具
+sudo systemctl set-default graphical.target  //设置图形化为默认启动方式
+vim /etc/gdm3/daemon.conf   在 security 下面添加 AllowRoot=true
+vim /etc/pam.d/gdm-password   注释掉这一行 auth required pam_succeed_if.so user != root quiet_success
+reboot
+
+vnc：
+apt install tightvncserver
+vncserver
+vncserver -kill :1
+vi ~/.vnc/xstartup  加入 startxfce4  放行5901
+vncserver -geometry 1920x1080 :1
+sudo apt-get install dbus-x11
+
+centos设置为中文:
+
+查看系当前语言包 locale
+查看系统拥有语言包 locale -a
+（zh_CN. UTF-8是简体中文，如果没有zh_CN. UTF-8,就安装语言包
+//yum install kde-l10n-Chinese
+yum -y install langpacks-zh_CN
+如果存在可以直接设置)
+vi /etc/locale.conf
+##加下面内容到第一行，设置中文
+LANG=zh_CN.UTF8
+
+ubuntu设置为中文：
+sudo apt-get install language-pack-zh-han*
+
+sudo apt install $(check-language-support)  //检查语言包
+vim /etc/default/locale
+
+debian：
+apt-get install locales
+dpkg-reconfigure locales
+sudo locale-gen zh_CN.UTF-8
+vim /etc/default/locale、
+
+LANGUAGE="en_US:en"
+LANG=en_US.UTF-8 英文
+
+LANG=zh_CN.UTF-8
+LANGUAGE="zh_CN:zh" 中文
+
+export LANG=zh_CN.UTF-8 临时修改
+vim /etc/locale.conf    LANG=zh_CN.UTF-8   或localectl set-locale LANG=zh_CN.UTF-8永久修改 
+apt-get install ttf-wqy-zenhei
+apt-get install xfonts-intl-chinese wqy* 
+apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming
+apt install fonts-noto-cjk
+
+mwget：
+获取安装包(方案一，未安装成功)
+复制代码
+wget http://jaist.dl.sourceforge.net/project/kmphpfm/mwget/0.1/mwget_0.1.0.orig.tar.bz2
+tar -xjvf mwget_0.1.0.orig.tar.bz2
+cd mwget_0.1.0.orig
+
+获取安装包（方案二，近期可行）
+git clone https://github.com/rayylee/mwget.git
+cd mwget
+apt-get update
+apt-get install intltool
+./configure
+make && make install
+
+火狐：
+CPU解决：
+首先解决CPU占用率高，打开网页停顿的问题。
+很简单，在“工具”/“选项”/“内容”里，找到“启用Java“这一项，去掉前面的勾，然后确
+认，重启即可解决问题
+内存 解决：
+为Firefox设置快速缓存
+　　1、打开Firefox浏览器。
+　　2、在地址栏中输入“about:config”。
+　　3、在“过滤器”中输入“browser.cache.memory.enable”。将其改为true
+　　4、在浏览器中右键点击后选择“新建”>“整数”。输入
+“browser.cache.memory.capacity”后点击“确定”。接着，你需要在此输入一个值，而
+这个值的大小则取决于你计算机物理内存的大小。内存数*16即可
+　　 PS：如果你想要恢复默认设置的话，你可以将
+“browser.cache.memory.capacity”的值改为“-1”。
+ 5、重新启动Firefox即可。
+当Firefox最小化时释放内存设置
+　　1、打开Firefox浏览器。
+　　2、在地址栏中输入“about:config”。
+　　3、在浏览器中右键点击，选择“新建”>“布尔”。
+　　4、在弹出的窗口中输入“config.trim_on_minimize”，接着点击“确定”。选中
+“true”，接着点击“确定”。
+ 5、重新启动Firefox即可。
+
+装
+cmatrix
+sl
+hollywood
+cowsay "Hello,world"
+
+sudo apt-get install figlet   toilet
+toilet i love you
+figlet i love you
+
+docker：
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+curl -sSL https://get.daocloud.io/docker | sh
+sudo systemctl start docker #启动
+sudo systemctl enable docker #配置开机自启
+vim /etc/docker/daemon.json 修改docker加速
+{
+  "registry-mirrors": ["https://mirror.ccs.tencentyun.com","https://registry.docker-cn.com","https://y4xpdpoy.mirror.aliyuncs.com"]
+}
+
+docker 更新
+docker ps -a 
+docker stop id
+pip install runlike
+runlike id
+复制修改名字
+docker rm 旧id
+
+青龙新：
+docker run -dit   -v /root/ql/config:/ql/data/config   -v /root/ql/log:/ql/data/log   -v /root/ql/db:/ql/db   -v /root/ql/repo:/ql/repo   -v /root/ql/raw:/ql/data/raw   -v /root/ql/scripts:/ql/data/scripts   -v /root/ql/jbot:/ql/data/jbot   -p 5700:5700   --name qinglong   --hostname qinglong   --restart unless-stopped   whyour/qinglong:latest
+
+依赖修复：
+docker exec -it qinglong bash
+https://gh.api.99988866.xyz/
+https://github.zhlh6.cn/
+https://mirror.ghproxy.com/
+curl -fsSL https://mirror.ghproxy.com/https://github.com/shufflewzc/QLDependency/blob/main/Shell/QLOneKeyDependency.sh | sh
+curl -fsSL https://nuoyi88.top:6969/down/96aFmGxoc9rF.sh | sh
+pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+cd ~
+mkdir pip
+cd pip
+vi pip.ini
+
+
+# coding: GBK
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host = https://pypi.tuna.tsinghua.edu.cn
+#清华大学：https://pypi.tuna.tsinghua.edu.cn/simple
+#阿里云：http://mirrors.aliyun.com/pypi/simple/
+#豆瓣：http://pypi.douban.com/simple/
+
+阿里云 http://mirrors.aliyun.com/pypi/simple/
+中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
+豆瓣(douban) http://pypi.douban.com/simple/
+清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
+中国科学技术大学 http://pypi.mirrors.ustc.edu.cn/simple/
+
+彩云：
+docker run -d --name=caiyun-webdav --restart=unless-stopped -p 23242:8080 -v /etc/localtime:/etc/localtime -e TZ="Asia/Shanghai" -e JAVA_OPTS="-Xmx512m" -e CAIYUN_ACCOUNT="ZlNFuJrCiRKKuTsjK1jneg==" -e CAIYUN_TOKEN="LEI0Uwn6C6o7fE37D5+NXGoTW8/BlYj1oS86HkqO1MPWXLrWzM2n3+8SpsCVxPT/OjSCssdgQB8WmGlJH3f8pZDgu8ibnl/5IcsJ2Q3R2e7z1xtD82lZcd3OKL5HR66spZG8Uum7bk57BRB10H9mfnWdYI12VXw0tsPsz0XfgNrte+c6+HfnfsSP4UYnyrzZD2m15cfZN8l075t4PFfTas6lTp7UWl4H9lrPnoy2GBwGI0G6Ifuy2wI4nY12EBpgn8x7hUijdEvUWJ0DXyDZUw==" -e CAIYUN_ENCRYPT="MTg3MTUzMjUzMTU=" -e CAIYUN_TEL="18715325315" -e CAIYUN.AUTH.USER-NAME="nuoyi" -e CAIYUN.AUTH.PASSWORD="Wang1234cy" vgearen/caiyun-webdav
+
+
+为知：
+docker run --name weizhi --restart=always -m 20M --memory-swap=-1 -it -d -v  ~/weizhidata:/wiz/storage -v  /etc/localtime:/etc/localtime -p 99:80 -p 22222:9269/udp  wiznote/wizserver
+
+docker run --name weizhi --restart=always -it -d -v  ~/weizhidata:/wiz/storage -v  /etc/localtime:/etc/localtime -p 99:80 -p 22222:9269/udp  wiznote/wizserver
+
+find / -name "*wechat_public.jpg*" ;
+find / -name "main.8589dcb7.chunk.js"
+/merged/wiz/app/wizserver/web/prod/www/static/js
+
+
+docker图形化：
+docker volume create portainer_data
+docker run --name portainer -d -p 8081:8000 -p 9099:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+FAST OS DOCKER：
+docker run --restart always --name fast -p 8081:8081 -d -v /var/run/docker.sock:/var/run/docker.sock wangbinxingkong/fast
+
+签到：
+docker run -itd \
+--restart always \
+--name qiandao \
+-p 8923:80 \
+-v /data/docker/qiandao:/usr/src/app/volume \
+a76yyyy/qiandao
+
+玩客云：
+docker run -d --name=wxedge --restart=always --privileged --net=host  --tmpfs /run --tmpfs /tmp -v /home/lighthouse/wankeyun:/storage:rw  registry.hub.docker.com/onething1/wxedge
+docker run -d --name=wxedge --restart=always --privileged --net=host  --tmpfs /run --tmpfs /tmp -v /home/lighthouse/wankeyun:/storage:rw  onething1/wxedge
+heimdall导航页：
+docker run -d --name=heimdall -p 8080:80 -p 8088:443 -v /home/docker/heimdall:/config --restart=unless-stopped linuxserver/heimdall
+
+proxy:
+docker run -d --name=goproxy23333 --restart=always --network=host stilleshan/goproxy /proxy socks -p :23333
+
+speedtest：
+docker run -p 8888:80 adolfintel/speedtest
+
+wordpress:
+docker run -e WORDPRESS_DB_HOST=172.17.0.1:3306 -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=7BFkD86KwbY5xhNn --name wordpress  -p 8088:80  -d wordpress:latest
