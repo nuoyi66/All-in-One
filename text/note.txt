@@ -1,4 +1,8 @@
 # 常用笔记
+vscode配置git：
+取消勾选
+use Editor As commit input
+
 window自启动：win + r 然后输入 shell:startup、
 
 nps：
