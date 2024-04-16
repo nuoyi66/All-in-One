@@ -292,6 +292,7 @@ cd mwget
 apt-get update
 apt-get install intltool -y
 ./configure
+sudo apt install make
 make && make install
 
 火狐：
