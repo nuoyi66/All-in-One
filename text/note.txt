@@ -290,7 +290,7 @@ cd mwget_0.1.0.orig
 git clone https://github.com/rayylee/mwget.git
 cd mwget
 apt-get update
-apt-get install intltool
+apt-get install intltool -y
 ./configure
 make && make install
 
