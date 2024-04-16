@@ -293,6 +293,7 @@ apt-get update
 apt-get install intltool make gcc -y
 ./configure
 sudo apt install make
+make && make install
 
 火狐：
 CPU解决：
