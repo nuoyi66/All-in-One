@@ -294,7 +294,6 @@ apt-get install intltool make gcc -y
 ./configure
 sudo apt install make
 make && make install
-
 火狐：
 CPU解决：
 首先解决CPU占用率高，打开网页停顿的问题。
