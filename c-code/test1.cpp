@@ -83,6 +83,7 @@ int main()
     jobtable job[N];
     int n;
     float ave_turnover_time;
+    printf("计升231王鑫，23204027 \n");
     printf("input job numbers\n");
     scanf("%d",&n);
     if(n<N)
