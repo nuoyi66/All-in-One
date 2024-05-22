@@ -202,6 +202,7 @@ int main()
 {
     char terminate=' ';
     bool element;
+    printf("计升231王鑫，23204027 \n");
     printf("你想开始程序吗?(y/n)");
     scanf("%c",&terminate);
     getchar();

@@ -147,6 +147,7 @@ void PrintTable()
 int main()
 {
     int ch;
+    printf("计升231王鑫，23204027 \n");
     printf("先检查初始状态是否安全。\n");
     if(SafeCheck())
     {

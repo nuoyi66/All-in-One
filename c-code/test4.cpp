@@ -134,6 +134,7 @@ int main()
     free_table[0].flag=1;
     for(i=1;i<m;i++) free_table[i].flag=0;
     for(i=0;i<n;i++) used_table[i].flag=0;
+    printf("计升231王鑫，23204027 \n");
     while(1)
     {
         printf("选择功能项（0-退出，1-分配主存，2-回收内存，3-显示主存）\n");
