@@ -25,11 +25,10 @@ void init(jobtable job[],int n)
         job[i].turnover_time=0.0;
     }
 }
-
 void print(jobtable job[],int n)
 {
     int i;
-    printf("name in_well run_time begin_run end_run turnover_time\n");
+    printf("name in_well run_time   begin_run         end_run   turnover_time\n");
     for(i=0;i<n;i++)
     {
         printf("%s\t%0.1f\t%0.1f\t",job[i].name,job[i].in_well,job[i].run_time);
@@ -39,7 +38,6 @@ void print(jobtable job[],int n)
         printf("%9.1f\t%9.1f\t%0.1f\n",job[i].begin_run,job[i].end_run,job[i].turnover_time);
     }
 }
-
 void swap(jobtable job[],int p,int q)
 {
     float temp1;
@@ -77,7 +75,6 @@ float response_ratio(jobtable job[],int n)
     }
     return(average_time/n);
 }
-
 int main()
 {
     jobtable job[N];
